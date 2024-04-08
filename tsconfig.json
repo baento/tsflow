@@ -1,0 +1,23 @@
+{
+  "extends": "@tsconfig/recommended",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "incremental": true,
+    "target": "ESNext",
+    "module": "CommonJS",
+    "declaration": true,
+    "sourceMap": true,
+    "composite": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "typeRoots": ["./node_modules/@types", "./src/types"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
