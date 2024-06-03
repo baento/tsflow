@@ -1,9 +1,4 @@
-import {
-  AstBuilder,
-  GherkinClassicTokenMatcher,
-  Parser,
-  compile,
-} from "@cucumber/gherkin";
+import { AstBuilder, GherkinClassicTokenMatcher, Parser, compile } from "@cucumber/gherkin";
 import AstNode from "@cucumber/gherkin/dist/src/AstNode";
 import { GherkinDocument, IdGenerator } from "@cucumber/messages";
 

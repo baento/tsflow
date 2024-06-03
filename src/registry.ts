@@ -1,8 +1,4 @@
-import {
-  Expression,
-  ExpressionFactory,
-  ParameterTypeRegistry,
-} from "@cucumber/cucumber-expressions";
+import { Expression, ExpressionFactory, ParameterTypeRegistry } from "@cucumber/cucumber-expressions";
 
 import { BindingDependency, ClassBinding, StepDefinition } from "./types";
 
@@ -11,9 +7,7 @@ export class BindingRegistry {
 
   private _parameterTypeRegistry = new ParameterTypeRegistry();
 
-  private _expressionFactory = new ExpressionFactory(
-    this._parameterTypeRegistry
-  );
+  private _expressionFactory = new ExpressionFactory(this._parameterTypeRegistry);
 
   private _dependencies = new Map<any, BindingDependency[]>();
   private _steps = new Map<Expression, StepDefinition>();
