@@ -38,18 +38,26 @@ export class BindingRegistry {
 
   public getStep(text: string) {
     let foundStepDefinition;
+    let foundArgs;
 
-    for (const [expression, stepBinding] of this._steps.entries()) {
-      if (expression.match(text)) {
+    for (const [expression, stepDefinition] of this._steps.entries()) {
+      const args = expression.match(text);
+
+      if (args) {
         if (foundStepDefinition) {
           throw new Error(`Found multiple step definitions for "${text}"`);
         }
 
-        foundStepDefinition = stepBinding;
+        foundStepDefinition = stepDefinition;
+        foundArgs = args;
       }
     }
 
-    return foundStepDefinition;
+    if (!foundStepDefinition || !foundArgs) {
+      throw new Error(`No step definition found for "${text}"`);
+    }
+
+    return { stepDefinition: foundStepDefinition, args: foundArgs };
   }
 
   public registerStep({ pattern, definition, options }: StepDefinition) {

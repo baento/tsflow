@@ -33,6 +33,7 @@
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.2",
+    "callsites": "^3.0.0",
     "eslint": "^9.4.0",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.3.0",
