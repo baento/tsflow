@@ -1,0 +1,24 @@
+name: TSFlow Release
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  HUSKY: 0
+
+jobs:
+  semantic-release:
+    name: Tag and release latest version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js and install dependencies
+        uses: "./.github/actions/setup"
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release

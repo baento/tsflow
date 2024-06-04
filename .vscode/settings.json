@@ -1,0 +1,7 @@
+{
+  "eslint.enable": true,
+  "eslint.validate": ["javascript", "typescript"],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.formatOnSave": true,
+  "files.eol": "\n"
+}
