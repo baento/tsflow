@@ -1,15 +1,12 @@
-import { describe, expect, it } from "@jest/globals";
-
-import fs from "fs";
 import path from "path";
+import fs from "fs";
 
-import { GherkinParser } from "../parser";
+import { GherkinParser } from "../gherkin/parser";
 
 describe("GherkinParser", () => {
-  const uri = path.resolve(__dirname, "./calculator.feature");
-  const source = fs.readFileSync(uri, { encoding: "utf-8" });
-
   const gherkinParser = new GherkinParser();
+  const uri = path.resolve(__dirname, "./features/calculator.feature");
+  const source = fs.readFileSync(uri, { encoding: "utf-8" });
 
   describe("parseDocument", () => {
     it("should parse a document", () => {
