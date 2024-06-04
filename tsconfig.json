@@ -8,15 +8,13 @@
     "module": "CommonJS",
     "declaration": true,
     "sourceMap": true,
-    "composite": true,
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "typeRoots": ["node_modules/@types", "src/types"]
+    "typeRoots": ["node_modules/@types", "src/types"],
+    "emitDeclarationOnly": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
