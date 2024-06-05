@@ -2,6 +2,7 @@
   "name": "tsflow",
   "version": "1.0.0",
   "author": "Banto",
+  "private": true,
   "license": "MIT",
   "type": "module",
   "scripts": {
