@@ -1,3 +1,12 @@
+# [1.1.0-alpha.1](https://github.com/baento/tsflow/compare/v1.0.0...v1.1.0-alpha.1) (2024-06-06)
+
+
+### Features
+
+* add classPrototype in the stepDefinition ([f44ac98](https://github.com/baento/tsflow/commit/f44ac98922fdb6b2423cd6da27b45f5cb13f2f7c))
+* add InstanceManager class for managing instances and dependencies ([cba36a5](https://github.com/baento/tsflow/commit/cba36a54563da223bca3270b34733307a2d44c89))
+* implement dynamic step invocation with class instances and parsed arguments ([63456de](https://github.com/baento/tsflow/commit/63456def35e8396e10ced0f8aaecd3c382e4ba9c))
+
 # 1.0.0 (2024-06-05)
 
 
