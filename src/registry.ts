@@ -36,6 +36,10 @@ export class BindingRegistry {
     }
   }
 
+  getDependencies(prototype: Class): Class[] {
+    return this._dependencies.get(prototype) || [];
+  }
+
   public getStep(text: string) {
     let foundStepDefinition;
     let foundArgs;
