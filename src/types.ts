@@ -1,8 +1,8 @@
-export type BindingDependency = new () => any;
+export type Class = new (...args: any[]) => any;
 
 export type ClassBinding = {
-  class: any;
-  dependencies?: BindingDependency[];
+  class: Class;
+  dependencies?: Class[];
 };
 
 export type StepPattern = string | RegExp;
@@ -11,8 +11,15 @@ export type StepOptions = {
   timeout?: number;
 };
 
-export type StepDefinition = {
+export type StepMetadata = {
   pattern: StepPattern;
-  definition: Function;
   options?: StepOptions;
+};
+
+export type StepDetails = StepMetadata & {
+  definition: Function;
+};
+
+export type StepDefinition = StepDetails & {
+  classPrototype: Class;
 };

@@ -1,6 +1,6 @@
 import { Expression, ExpressionFactory, ParameterTypeRegistry } from "@cucumber/cucumber-expressions";
 
-import { BindingDependency, ClassBinding, StepDefinition } from "./types";
+import { Class, ClassBinding, StepDefinition, StepDetails } from "./types";
 
 export class BindingRegistry {
   private static _instance: BindingRegistry;
@@ -9,7 +9,7 @@ export class BindingRegistry {
 
   private _expressionFactory = new ExpressionFactory(this._parameterTypeRegistry);
 
-  private _dependencies = new Map<any, BindingDependency[]>();
+  private _dependencies = new Map<any, Class[]>();
   private _steps = new Map<Expression, StepDefinition>();
 
   private constructor() {}
@@ -54,17 +54,20 @@ export class BindingRegistry {
     }
 
     if (!foundStepDefinition || !foundArgs) {
-      throw new Error(`No step definition found for "${text}"`);
+      throw new Error(
+        `No step definition found for "${text}".\nDid you decorate your step definition with a Step decorator (@Given, @When, @Then, ...)?\nIf you did, make sure you also decorate your class with the @Binding decorator.`,
+      );
     }
 
     return { stepDefinition: foundStepDefinition, args: foundArgs };
   }
 
-  public registerStep({ pattern, definition, options }: StepDefinition) {
+  public registerStep(classPrototype: Class, { pattern, definition, options }: StepDetails) {
     const stepExpression = this._expressionFactory.createExpression(pattern);
 
-    const step = {
+    const step: StepDefinition = {
       pattern,
+      classPrototype,
       definition,
       options,
     };
