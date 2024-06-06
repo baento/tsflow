@@ -48,7 +48,7 @@ describe("Binding registry", () => {
     it("should have the same step function when there's multiple pattern", () => {
       const { stepDefinition: definition1 } = BindingRegistry.instance.getStep("I have a step");
       const { stepDefinition: definition2 } = BindingRegistry.instance.getStep("I have a second pattern");
-      expect(definition1.definition).toBe(definition2.definition);
+      expect(definition1.method).toBe(definition2.method);
     });
 
     it("should throw en error if the class is not decorated with @Binding", () => {

@@ -1,7 +1,14 @@
-export type Class = new (...args: any[]) => any;
+interface Prototype {
+  [key: string | symbol]: any;
+}
 
-export type ClassBinding = {
-  class: Class;
+export type Class<T = Prototype> = {
+  new (...args: any[]): any;
+  prototype: T;
+};
+
+export type BindingDefinition = {
+  binding: Class;
   dependencies?: Class[];
 };
 
@@ -16,10 +23,7 @@ export type StepMetadata = {
   options?: StepOptions;
 };
 
-export type StepDetails = StepMetadata & {
-  definition: Function;
-};
-
-export type StepDefinition = StepDetails & {
-  classPrototype: Class;
+export type StepDefinition = StepMetadata & {
+  method: Function;
+  binding: Class;
 };

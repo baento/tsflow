@@ -29,9 +29,9 @@ export const loadFeature = (relativePath: string) => {
           for (const step of pickle.steps) {
             const { stepDefinition, args } = BindingRegistry.instance.getStep(step.text);
 
-            const instance = instanceManager.getOrSaveInstance(stepDefinition.classPrototype);
+            const instance = instanceManager.getOrSaveInstance(stepDefinition.binding);
 
-            await stepDefinition.definition.apply(instance, parseArguments(args));
+            await stepDefinition.method.apply(instance, parseArguments(args));
           }
           instanceManager.clear();
         });

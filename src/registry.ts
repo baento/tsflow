@@ -1,15 +1,14 @@
 import { Expression, ExpressionFactory, ParameterTypeRegistry } from "@cucumber/cucumber-expressions";
 
-import { Class, ClassBinding, StepDefinition, StepDetails } from "./types";
+import { Class, BindingDefinition, StepDefinition } from "./types";
 
 export class BindingRegistry {
   private static _instance: BindingRegistry;
 
   private _parameterTypeRegistry = new ParameterTypeRegistry();
-
   private _expressionFactory = new ExpressionFactory(this._parameterTypeRegistry);
 
-  private _dependencies = new Map<any, Class[]>();
+  private _dependencies = new Map<Class, Class[]>();
   private _steps = new Map<Expression, StepDefinition>();
 
   private constructor() {}
@@ -22,22 +21,20 @@ export class BindingRegistry {
     return this._instance;
   }
 
-  public registerBinding({ class: prototype, dependencies }: ClassBinding) {
-    let bindingDependencies = this._dependencies.get(prototype);
+  public getDependencies(binding: Class) {
+    return this._dependencies.get(binding) || [];
+  }
+
+  public registerBinding({ binding, dependencies }: BindingDefinition) {
+    let bindingDependencies = this._dependencies.get(binding);
 
     if (!bindingDependencies) {
-      bindingDependencies = [];
-
-      this._dependencies.set(prototype, bindingDependencies);
+      this._dependencies.set(binding, (bindingDependencies = []));
     }
 
     if (dependencies) {
       bindingDependencies.push(...dependencies);
     }
-  }
-
-  getDependencies(prototype: Class): Class[] {
-    return this._dependencies.get(prototype) || [];
   }
 
   public getStep(text: string) {
@@ -66,13 +63,13 @@ export class BindingRegistry {
     return { stepDefinition: foundStepDefinition, args: foundArgs };
   }
 
-  public registerStep(classPrototype: Class, { pattern, definition, options }: StepDetails) {
+  public registerStep({ pattern, binding, method: definition, options }: StepDefinition) {
     const stepExpression = this._expressionFactory.createExpression(pattern);
 
     const step: StepDefinition = {
       pattern,
-      classPrototype,
-      definition,
+      binding,
+      method: definition,
       options,
     };
 
