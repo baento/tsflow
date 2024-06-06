@@ -1,15 +1,14 @@
 import { Expression, ExpressionFactory, ParameterTypeRegistry } from "@cucumber/cucumber-expressions";
 
-import { BindingDependency, ClassBinding, StepDefinition } from "./types";
+import { Class, BindingDefinition, StepDefinition } from "./types";
 
 export class BindingRegistry {
   private static _instance: BindingRegistry;
 
   private _parameterTypeRegistry = new ParameterTypeRegistry();
-
   private _expressionFactory = new ExpressionFactory(this._parameterTypeRegistry);
 
-  private _dependencies = new Map<any, BindingDependency[]>();
+  private _dependencies = new Map<Class, Class[]>();
   private _steps = new Map<Expression, StepDefinition>();
 
   private constructor() {}
@@ -22,13 +21,15 @@ export class BindingRegistry {
     return this._instance;
   }
 
-  public registerBinding({ class: prototype, dependencies }: ClassBinding) {
-    let bindingDependencies = this._dependencies.get(prototype);
+  public getDependencies(binding: Class) {
+    return this._dependencies.get(binding) || [];
+  }
+
+  public registerBinding({ binding, dependencies }: BindingDefinition) {
+    let bindingDependencies = this._dependencies.get(binding);
 
     if (!bindingDependencies) {
-      bindingDependencies = [];
-
-      this._dependencies.set(prototype, bindingDependencies);
+      this._dependencies.set(binding, (bindingDependencies = []));
     }
 
     if (dependencies) {
@@ -54,18 +55,21 @@ export class BindingRegistry {
     }
 
     if (!foundStepDefinition || !foundArgs) {
-      throw new Error(`No step definition found for "${text}"`);
+      throw new Error(
+        `No step definition found for "${text}".\nDid you decorate your step definition with a Step decorator (@Given, @When, @Then, ...)?\nIf you did, make sure you also decorate your class with the @Binding decorator.`,
+      );
     }
 
     return { stepDefinition: foundStepDefinition, args: foundArgs };
   }
 
-  public registerStep({ pattern, definition, options }: StepDefinition) {
+  public registerStep({ pattern, binding, method: definition, options }: StepDefinition) {
     const stepExpression = this._expressionFactory.createExpression(pattern);
 
-    const step = {
+    const step: StepDefinition = {
       pattern,
-      definition,
+      binding,
+      method: definition,
       options,
     };
 

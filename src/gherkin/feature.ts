@@ -1,9 +1,11 @@
 import callsites from "callsites";
-import path from "path";
 import fs from "fs";
+import path from "path";
 
-import { GherkinParser } from "./parser";
+import { Argument } from "@cucumber/cucumber-expressions";
+import { InstanceManager } from "../instanceManager";
 import { BindingRegistry } from "../registry";
+import { GherkinParser } from "./parser";
 
 export const loadFeature = (relativePath: string) => {
   const callSite = callsites()[1];
@@ -22,16 +24,26 @@ export const loadFeature = (relativePath: string) => {
     describe(document.feature.name, () => {
       for (const pickle of pickles) {
         test(pickle.name, async () => {
-          for (const step of pickle.steps) {
-            const { stepDefinition } = BindingRegistry.instance.getStep(step.text);
+          const instanceManager = new InstanceManager();
 
-            console.log(stepDefinition.pattern, step.text);
-            // TODO
+          for (const step of pickle.steps) {
+            const { stepDefinition, args } = BindingRegistry.instance.getStep(step.text);
+
+            const instance = instanceManager.getOrSaveInstance(stepDefinition.binding);
+
+            await stepDefinition.method.apply(instance, parseArguments(args));
           }
+          instanceManager.clear();
         });
       }
     });
   } else {
     throw new Error(`No feature defined in ${uri}`);
   }
+};
+
+const parseArguments = <T>(args: readonly Argument[]): (T | null)[] => {
+  return args.map((arg) => {
+    return arg.getValue(this);
+  });
 };
