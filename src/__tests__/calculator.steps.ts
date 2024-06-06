@@ -18,6 +18,8 @@ export default class CalculatorSteps {
 
   constructor(readonly calculator: Calculator) {}
 
+  @Given("X is {int}")
+  @Given("Y is {int}")
   @Given(/[AB] is (\d)/)
   public stepIs(value: number) {
     this.calculator.add(value);
@@ -28,7 +30,8 @@ export default class CalculatorSteps {
     this.result = this.calculator.sum();
   }
 
-  @Then("The result is {int}")
+  @Then("The result equals {int}")
+  @Then(/The result is (\w+)/)
   public stepResult(expectedResult: number) {
     expect(this.result).toStrictEqual(expectedResult);
   }
