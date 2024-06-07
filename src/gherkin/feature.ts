@@ -1,44 +1,54 @@
 import callsites from "callsites";
-import fs from "fs";
 import path from "path";
+import fs from "fs";
+import { globSync } from "fast-glob";
 
 import { Argument } from "@cucumber/cucumber-expressions";
+
 import { InstanceManager } from "../instanceManager";
 import { BindingRegistry } from "../registry";
 import { GherkinParser } from "./parser";
 
-export const loadFeature = (relativePath: string) => {
+export const loadFeature = (pattern: string | string[]) => {
   const callSite = callsites()[1];
   const fileName = callSite.getFileName()!;
   const dirName = path.dirname(fileName);
 
-  const uri = path.resolve(dirName, relativePath);
-  const source = fs.readFileSync(uri, { encoding: "utf-8" });
+  const featureFiles = globSync(pattern, { cwd: dirName, absolute: true });
 
-  const parser = new GherkinParser();
+  if (featureFiles.length === 0) {
+    const patterns = Array.isArray(pattern) ? pattern.join(", ") : pattern;
+    throw new Error(`No feature file found for ${patterns}`);
+  }
 
-  const document = parser.parseDocument(source);
-  const pickles = parser.compileDocument(document, uri);
+  for (const featureFile of featureFiles) {
+    const source = fs.readFileSync(featureFile, { encoding: "utf-8" });
 
-  if (document.feature) {
-    describe(document.feature.name, () => {
-      for (const pickle of pickles) {
-        test(pickle.name, async () => {
-          const instanceManager = new InstanceManager();
+    const parser = new GherkinParser();
 
-          for (const step of pickle.steps) {
-            const { stepDefinition, args } = BindingRegistry.instance.getStep(step.text);
+    const document = parser.parseDocument(source);
+    const pickles = parser.compileDocument(document, featureFile);
 
-            const instance = instanceManager.getOrSaveInstance(stepDefinition.binding);
+    if (document.feature) {
+      describe(document.feature.name, () => {
+        for (const pickle of pickles) {
+          test(pickle.name, async () => {
+            const instanceManager = new InstanceManager();
 
-            await stepDefinition.method.apply(instance, parseArguments(args));
-          }
-          instanceManager.clear();
-        });
-      }
-    });
-  } else {
-    throw new Error(`No feature defined in ${uri}`);
+            for (const step of pickle.steps) {
+              const { stepDefinition, args } = BindingRegistry.instance.getStep(step.text);
+
+              const instance = instanceManager.getOrSaveInstance(stepDefinition.binding);
+
+              await stepDefinition.method.apply(instance, parseArguments(args));
+            }
+            instanceManager.clear();
+          });
+        }
+      });
+    } else {
+      throw new Error(`No feature defined in ${featureFile}`);
+    }
   }
 };
 
