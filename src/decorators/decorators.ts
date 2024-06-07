@@ -13,7 +13,7 @@ export const Binding: BindingDecorator = (dependencies) => (target) => {
     if (steps) {
       for (const step of steps) {
         BindingRegistry.instance.registerStep({
-          ...step,
+          ...structuredClone(step), // Or loadash.cloneDeep (better performance (1,115,950 ops/sec vs 439,153 ops/sec))
           binding: target,
           method: target.prototype[key],
         });
