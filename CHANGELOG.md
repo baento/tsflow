@@ -1,3 +1,10 @@
+# [1.1.0-alpha.3](https://github.com/baento/tsflow/compare/v1.1.0-alpha.2...v1.1.0-alpha.3) (2024-06-07)
+
+
+### Features
+
+* **decorators:** add timeout option to step execution ([#18](https://github.com/baento/tsflow/issues/18)) ([ed38df4](https://github.com/baento/tsflow/commit/ed38df4d762c5cbd525bbd6120a883789802bd15))
+
 # [1.1.0-alpha.2](https://github.com/baento/tsflow/compare/v1.1.0-alpha.1...v1.1.0-alpha.2) (2024-06-07)
 
 
