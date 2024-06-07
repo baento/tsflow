@@ -11,7 +11,7 @@
     "target": "esnext"
   },
   "module": {
-    "type": "commonjs"
+    "type": "es6"
   },
   "exclude": ["__tests__"]
 }

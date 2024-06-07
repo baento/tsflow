@@ -2,20 +2,9 @@
   "extends": "@tsconfig/recommended",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "dist",
-    "incremental": true,
-    "target": "ESNext",
-    "module": "CommonJS",
     "declaration": true,
-    "sourceMap": true,
-    "strict": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["node_modules/@types", "src/types"],
+    "declarationDir": "dist",
     "emitDeclarationOnly": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+  "include": ["src"]
 }
