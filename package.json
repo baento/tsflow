@@ -34,6 +34,7 @@
     "@cucumber/messages": "^24.1.0",
     "callsites": "^3.0.0",
     "fast-glob": "^3.3.2",
+    "lodash.clonedeep": "^4.5.0",
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
@@ -49,6 +50,7 @@
     "@types/eslint__js": "^8.42.3",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/jest": "^29.5.12",
+    "@types/lodash.clonedeep": "^4.5.9",
     "@types/node": "^20.12.2",
     "eslint": "^9.4.0",
     "eslint-config-prettier": "^9.1.0",

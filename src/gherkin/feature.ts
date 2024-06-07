@@ -40,7 +40,18 @@ export const loadFeature = (pattern: string | string[]) => {
 
               const instance = instanceManager.getOrSaveInstance(stepDefinition.binding);
 
-              await stepDefinition.method.apply(instance, parseArguments(args));
+              const calls: Promise<unknown>[] = [stepDefinition.method.apply(instance, parseArguments(args))];
+
+              if (stepDefinition.options?.timeout) {
+                const timeoutPromise = new Promise(() => {
+                  setTimeout(() => {
+                    throw new Error(`Step timed out after ${stepDefinition.options!.timeout}ms`);
+                  }, stepDefinition.options!.timeout);
+                });
+                calls.push(timeoutPromise);
+              }
+
+              await Promise.race(calls);
             }
             instanceManager.clear();
           });
