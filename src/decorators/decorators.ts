@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import cloneDeep from "lodash.clonedeep";
 
 import { BindingRegistry } from "../registry";
 import { StepMetadata } from "../types";
@@ -13,7 +14,7 @@ export const Binding: BindingDecorator = (dependencies) => (target) => {
     if (steps) {
       for (const step of steps) {
         BindingRegistry.instance.registerStep({
-          ...structuredClone(step), // Or loadash.cloneDeep (better performance (1,115,950 ops/sec vs 439,153 ops/sec))
+          ...cloneDeep(step),
           binding: target,
           method: target.prototype[key],
         });
