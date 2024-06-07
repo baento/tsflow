@@ -1,3 +1,10 @@
+# [1.1.0-alpha.2](https://github.com/baento/tsflow/compare/v1.1.0-alpha.1...v1.1.0-alpha.2) (2024-06-07)
+
+
+### Features
+
+* **features:** modify loadFeature to load multiple files at once using glob patterns ([#15](https://github.com/baento/tsflow/issues/15)) ([f2e3f8b](https://github.com/baento/tsflow/commit/f2e3f8b0f977c346ea0cf375b1cc578fa007b72e))
+
 # [1.1.0-alpha.1](https://github.com/baento/tsflow/compare/v1.0.0...v1.1.0-alpha.1) (2024-06-06)
 
 
