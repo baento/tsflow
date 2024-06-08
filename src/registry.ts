@@ -1,6 +1,7 @@
 import { type Expression, ExpressionFactory, ParameterTypeRegistry } from "@cucumber/cucumber-expressions";
+import cloneDeep from "lodash.clonedeep";
 
-import type { Class, BindingDefinition, StepDefinition } from "./types";
+import type { BindingDefinition, Class, StepDefinition } from "./types";
 
 export class BindingRegistry {
   private static _instance: BindingRegistry;
@@ -64,16 +65,9 @@ export class BindingRegistry {
     return { stepDefinition: foundStepDefinition, args: foundArgs };
   }
 
-  public registerStep({ pattern, binding, method: definition, options }: StepDefinition) {
-    const stepExpression = this._expressionFactory.createExpression(pattern);
+  public registerStep(stepDefinition: StepDefinition) {
+    const stepExpression = this._expressionFactory.createExpression(stepDefinition.pattern);
 
-    const step: StepDefinition = {
-      pattern,
-      binding,
-      method: definition,
-      options,
-    };
-
-    this._steps.set(stepExpression, step);
+    this._steps.set(stepExpression, cloneDeep(stepDefinition));
   }
 }
