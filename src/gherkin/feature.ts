@@ -1,9 +1,9 @@
 import callsites from "callsites";
-import path from "path";
-import fs from "fs";
+import path from "node:path";
+import fs from "node:fs";
 import { globSync } from "fast-glob";
 
-import { Argument } from "@cucumber/cucumber-expressions";
+import type { Argument } from "@cucumber/cucumber-expressions";
 
 import { InstanceManager } from "../instanceManager";
 import { BindingRegistry } from "../registry";

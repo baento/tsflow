@@ -2,10 +2,12 @@ interface Prototype {
   [key: string | symbol]: any;
 }
 
-export type Class<T = Prototype> = {
+export type Class = {
   new (...args: any[]): any;
-  prototype: T;
+  prototype: Prototype;
 };
+
+export type Method = (...args: any[]) => any;
 
 export type BindingDefinition = {
   binding: Class;
@@ -24,6 +26,6 @@ export type StepMetadata = {
 };
 
 export type StepDefinition = StepMetadata & {
-  method: Function;
+  method: Method;
   binding: Class;
 };

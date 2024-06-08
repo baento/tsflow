@@ -1,6 +1,6 @@
-import { Expression, ExpressionFactory, ParameterTypeRegistry } from "@cucumber/cucumber-expressions";
+import { type Expression, ExpressionFactory, ParameterTypeRegistry } from "@cucumber/cucumber-expressions";
 
-import { Class, BindingDefinition, StepDefinition } from "./types";
+import type { Class, BindingDefinition, StepDefinition } from "./types";
 
 export class BindingRegistry {
   private static _instance: BindingRegistry;
@@ -14,11 +14,11 @@ export class BindingRegistry {
   private constructor() {}
 
   public static get instance(): BindingRegistry {
-    if (!this._instance) {
-      this._instance = new BindingRegistry();
+    if (!BindingRegistry._instance) {
+      BindingRegistry._instance = new BindingRegistry();
     }
 
-    return this._instance;
+    return BindingRegistry._instance;
   }
 
   public getDependencies(binding: Class) {
@@ -29,7 +29,8 @@ export class BindingRegistry {
     let bindingDependencies = this._dependencies.get(binding);
 
     if (!bindingDependencies) {
-      this._dependencies.set(binding, (bindingDependencies = []));
+      bindingDependencies = [];
+      this._dependencies.set(binding, bindingDependencies);
     }
 
     if (dependencies) {

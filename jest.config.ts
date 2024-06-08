@@ -1,6 +1,6 @@
 import type { Config } from "jest";
 
-import fs from "fs";
+import fs from "node:fs";
 
 const swcConfig = JSON.parse(fs.readFileSync(`${__dirname}/.swcrc`, "utf-8"));
 
