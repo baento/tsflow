@@ -23,10 +23,10 @@
     "test": "jest --watch",
     "test:ci": "jest --ci",
     "prepare": "husky",
-    "format": "prettier --log-level warn --write --cache .",
-    "format:check": "prettier --check --cache .",
-    "lint": "eslint . --cache",
-    "lint:fix": "eslint . --fix"
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write ."
   },
   "dependencies": {
     "@cucumber/cucumber-expressions": "^17.1.0",
@@ -38,35 +38,25 @@
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.8.0",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
-    "@eslint/js": "^9.4.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@swc/cli": "^0.3.12",
     "@swc/core": "^1.5.24",
     "@swc/jest": "^0.2.36",
     "@tsconfig/recommended": "^1.0.5",
-    "@types/eslint__js": "^8.42.3",
-    "@types/eslint-config-prettier": "^6.11.3",
     "@types/jest": "^29.5.12",
     "@types/lodash.clonedeep": "^4.5.9",
     "@types/node": "^20.12.2",
-    "eslint": "^9.4.0",
-    "eslint-config-prettier": "^9.1.0",
-    "globals": "^15.3.0",
     "husky": "^9.0.11",
-    "prettier": "3.3.0",
     "semantic-release": "^24.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.3",
-    "typescript-eslint": "^7.11.0"
+    "typescript": "^5.4.3"
   },
   "peerDependencies": {
     "jest": "^29.7.0"
-  },
-  "overrides": {
-    "eslint": "$eslint"
   },
   "volta": {
     "node": "22.2.0",

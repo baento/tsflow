@@ -1,5 +1,5 @@
 import { BindingRegistry } from "./registry";
-import { Class } from "./types";
+import type { Class } from "./types";
 
 export class InstanceManager {
   private _instances = new Map<string, Class>();
@@ -31,9 +31,9 @@ export class InstanceManager {
       this.saveInstanceAndDeps(prototype);
 
       return this.getOrSaveInstance(prototype);
-    } else {
-      return instance;
     }
+
+    return instance;
   }
 
   public getInstance(prototype: Class) {

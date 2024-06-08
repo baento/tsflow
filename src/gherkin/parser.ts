@@ -1,6 +1,6 @@
 import { AstBuilder, GherkinClassicTokenMatcher, Parser, compile } from "@cucumber/gherkin";
-import AstNode from "@cucumber/gherkin/dist/src/AstNode";
-import { GherkinDocument, IdGenerator } from "@cucumber/messages";
+import type AstNode from "@cucumber/gherkin/dist/src/AstNode";
+import { type GherkinDocument, IdGenerator } from "@cucumber/messages";
 
 export class GherkinParser {
   private _uuid: IdGenerator.NewId;

@@ -1,4 +1,4 @@
-import { Class, StepOptions, StepPattern } from "../types";
+import type { Class, StepOptions, StepPattern } from "../types";
 
 type ClassDecorator = <T extends Class>(target: T, context: ClassDecoratorContext<T>) => void;
 

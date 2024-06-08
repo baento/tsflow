@@ -1,9 +1,10 @@
 import "reflect-metadata";
+
 import cloneDeep from "lodash.clonedeep";
 
 import { BindingRegistry } from "../registry";
-import { StepMetadata } from "../types";
-import { BindingDecorator, StepDecorator } from "./decorators.types";
+import type { StepMetadata } from "../types";
+import type { BindingDecorator, StepDecorator } from "./decorators.types";
 
 export const Binding: BindingDecorator = (dependencies) => (target) => {
   const propertyKeys = Reflect.ownKeys(target.prototype);
@@ -32,7 +33,8 @@ export const Step: StepDecorator = (pattern, options) => (target) => {
   let steps = Reflect.getMetadata("steps", target) as StepMetadata[];
 
   if (!steps) {
-    Reflect.defineMetadata("steps", (steps = []), target);
+    steps = [];
+    Reflect.defineMetadata("steps", steps, target);
   }
 
   steps.push({

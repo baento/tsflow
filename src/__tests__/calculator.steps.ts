@@ -14,7 +14,7 @@ class Calculator {
 
 @Binding([Calculator])
 export default class CalculatorSteps {
-  private result: number = 0;
+  private result = 0;
 
   constructor(readonly calculator: Calculator) {}
 
