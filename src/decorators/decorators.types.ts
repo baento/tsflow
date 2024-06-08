@@ -1,12 +1,8 @@
-import type { Class, StepOptions, StepPattern } from "../types";
+import type { Class, Method, StepOptions, StepPattern } from "../types";
 
-type ClassDecorator = <T extends Class>(target: T, context: ClassDecoratorContext<T>) => void;
+type ClassDecorator = <T extends Class>(target: T, context: ClassDecoratorContext) => void;
 
-type MethodDecorator = <This, Args extends any[], Return>(
-  target: (this: This, ...args: Args) => Return,
-  context: ClassMethodDecoratorContext<This, (this: This, ...args: Args) => Return>,
-) => void;
+type MethodDecorator = <T extends Method>(target: T, context: ClassMethodDecoratorContext) => void;
 
 export type BindingDecorator = (dependencies?: Class[]) => ClassDecorator;
-
 export type StepDecorator = (pattern: StepPattern, options?: StepOptions) => MethodDecorator;
