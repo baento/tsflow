@@ -1,6 +1,6 @@
-import callsites from "callsites";
-import path from "node:path";
 import fs from "node:fs";
+import path from "node:path";
+import callsites from "callsites";
 import { globSync } from "fast-glob";
 
 import type { Argument } from "@cucumber/cucumber-expressions";
