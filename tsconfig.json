@@ -2,9 +2,9 @@
   "extends": "@tsconfig/recommended",
   "compilerOptions": {
     "rootDir": "src",
+    "outDir": "dist",
     "declaration": true,
-    "declarationDir": "dist",
-    "emitDeclarationOnly": true
+    "sourceMap": true
   },
   "include": ["src"]
 }
