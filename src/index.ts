@@ -1,3 +1,3 @@
 export * from "./decorators";
-export * from "./registry";
 export * from "./gherkin";
+export * from "./steps";

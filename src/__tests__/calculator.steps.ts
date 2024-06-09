@@ -25,7 +25,7 @@ export default class CalculatorSteps {
     this.calculator.add(value);
   }
 
-  @When("I add the values")
+  @When("I add the values", { timeout: 5000 })
   public stepAddValues() {
     this.result = this.calculator.sum();
   }

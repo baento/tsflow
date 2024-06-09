@@ -9,11 +9,6 @@ export type Class = {
 
 export type Method = (...args: any[]) => any;
 
-export type BindingDefinition = {
-  binding: Class;
-  dependencies?: Class[];
-};
-
 export type StepPattern = string | RegExp;
 
 export type StepOptions = {
@@ -22,7 +17,7 @@ export type StepOptions = {
 
 export type StepMetadata = {
   pattern: StepPattern;
-  options?: StepOptions;
+  options: StepOptions;
 };
 
 export type StepDefinition = StepMetadata & {
