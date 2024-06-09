@@ -31,6 +31,7 @@
     "@cucumber/gherkin": "^28.0.0",
     "@cucumber/messages": "^24.1.0",
     "callsites": "^3.0.0",
+    "dedent": "^1.5.3",
     "execa": "^5.1.1",
     "fast-glob": "^3.3.2",
     "lodash.clonedeep": "^4.5.0",

@@ -1,4 +1,5 @@
 import { type Expression, ExpressionFactory, ParameterTypeRegistry } from "@cucumber/cucumber-expressions";
+import dedent from "dedent";
 import cloneDeep from "lodash.clonedeep";
 
 import type { StepDefinition } from "./types";
@@ -39,9 +40,11 @@ export class Steps {
     }
 
     if (!foundStep || !foundArgs) {
-      throw new Error(
-        `No step definition found for "${text}".\nDid you decorate your step definition with a Step decorator (@Given, @When, @Then, ...)?\nIf you did, make sure you also decorate your class with the @Binding decorator.`,
-      );
+      throw new Error(dedent`
+        No step definition found for "${text}".
+        Did you decorate your step definition with a Step decorator (@Given, @When, @Then, ...)?
+        If you did, make sure you also decorate your class with the @Binding decorator.
+        `);
     }
 
     return { step: foundStep, args: foundArgs };
