@@ -1,3 +1,10 @@
+# [1.1.0-alpha.4](https://github.com/baento/tsflow/compare/v1.1.0-alpha.3...v1.1.0-alpha.4) (2024-06-09)
+
+
+### Bug Fixes
+
+* **timeout:** step timeout is cleared at the end of a step ([#28](https://github.com/baento/tsflow/issues/28)) ([bcc6bed](https://github.com/baento/tsflow/commit/bcc6bed36bde9e4eceb0bb8ba0a8ce9f415f6f01))
+
 # [1.1.0-alpha.3](https://github.com/baento/tsflow/compare/v1.1.0-alpha.2...v1.1.0-alpha.3) (2024-06-07)
 
 
