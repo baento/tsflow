@@ -2,7 +2,6 @@
   "extends": "@tsconfig/recommended",
   "compilerOptions": {
     "lib": ["ES2021"],
-    "rootDir": ".",
     "outDir": "dist",
     "declaration": true,
     "sourceMap": true
