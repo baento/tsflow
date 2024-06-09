@@ -27,11 +27,14 @@ describe("Container", () => {
   }
 
   describe("get", () => {
+    jest.spyOn(Container.prototype, "instanciate");
+
     it("should return an instance of the class", () => {
       const container = new Container();
       const instance = container.get(TestClass);
 
       expect(instance).toBeDefined();
+      expect(container.instanciate).toHaveBeenCalled();
     });
 
     it("should return the same instance of the class", () => {
@@ -40,6 +43,7 @@ describe("Container", () => {
       const instance2 = container.get(TestClass);
 
       expect(instance1).toBe(instance2);
+      expect(container.instanciate).toHaveBeenCalledTimes(1);
     });
 
     it("should return an instance of the class with one level of dependencies", () => {
@@ -49,6 +53,7 @@ describe("Container", () => {
 
       expect(instance).toBeDefined();
       expect(dependency).toBeDefined();
+      expect(container.instanciate).toHaveBeenCalledTimes(2);
     });
 
     it("should return an instance of the class with two levels of dependencies", () => {
@@ -60,6 +65,7 @@ describe("Container", () => {
       expect(instance).toBeDefined();
       expect(dependency).toBeDefined();
       expect(subDependency).toBeDefined();
+      expect(container.instanciate).toHaveBeenCalledTimes(3);
     });
 
     it("should return an instance of the class with two dependencies", () => {
@@ -71,6 +77,7 @@ describe("Container", () => {
       expect(instance).toBeDefined();
       expect(dependency1).toBeDefined();
       expect(dependency2).toBeDefined();
+      expect(container.instanciate).toHaveBeenCalledTimes(3);
     });
   });
 });
