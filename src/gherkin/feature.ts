@@ -44,10 +44,13 @@ export const loadFeature = (pattern: string | string[]) => {
 
             const instance = container.get(step.binding);
 
-            await Promise.race([
-              step.method.apply(instance, parseArguments(args)),
-              timeout(step.options.timeout ?? 5000),
-            ]);
+            let promise = step.method.apply(instance, parseArguments(args));
+
+            if (step.options.timeout) {
+              promise = wrapTimeout(promise, step.options.timeout);
+            }
+
+            await promise;
           }
 
           container.clear();
@@ -57,8 +60,16 @@ export const loadFeature = (pattern: string | string[]) => {
   }
 };
 
-const timeout = (ms: number) => {
-  return new Promise((_, reject) => setTimeout(() => reject(new Error(`Step timed out after ${ms}ms`)), ms));
+const wrapTimeout = async <T>(promise: Promise<T>, ms: number) => {
+  let timer;
+
+  const timeoutPromise = new Promise((_, reject) => {
+    timer = setTimeout(reject, ms, new Error(`Step timed out after ${ms}ms`));
+  });
+
+  await Promise.race([promise, timeoutPromise]);
+
+  clearTimeout(timer);
 };
 
 const parseArguments = <T>(args: readonly Argument[]): (T | null)[] => {
