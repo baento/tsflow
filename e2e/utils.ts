@@ -1,9 +1,11 @@
+import dedent from "dedent";
+
 export const extractSummary = (stdout: string) => {
   const match = stdout
     .replaceAll(/(?:\\[nr])+/g, "\n")
     .match(/(Seed:.*\n)?Test Suites:.*\nTests.*\nSnapshots.*\nTime.*(\nRan all test suites)*.*\n*$/gm);
   if (!match) {
-    throw new Error(`
+    throw new Error(dedent`
         Could not find test summary in the output.
         OUTPUT:
           ${stdout}
