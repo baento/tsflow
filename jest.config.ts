@@ -6,7 +6,11 @@ export default {
     "^.+\\.[jt]s$": "ts-jest",
   },
   collectCoverage: true,
-  collectCoverageFrom: ["<rootDir>/src/**/*.[jt]s", "!<rootDir>/src/**/*.(test|steps).[jt]s"],
+  collectCoverageFrom: [
+    "<rootDir>/src/**/*.[jt]s",
+    "!<rootDir>/src/**/index.ts",
+    "!<rootDir>/src/**/*.(test|steps).[jt]s",
+  ],
   coverageDirectory: "<rootDir>/coverage",
   clearMocks: true,
   watchPathIgnorePatterns: ["<rootDir>/node_modules"],

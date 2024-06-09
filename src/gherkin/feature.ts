@@ -5,8 +5,9 @@ import { globSync } from "fast-glob";
 
 import type { Argument } from "@cucumber/cucumber-expressions";
 
-import { InstanceManager } from "../instanceManager";
-import { BindingRegistry } from "../registry";
+import { Container } from "../dependencies";
+import { Steps } from "../steps";
+
 import { GherkinParser } from "./parser";
 
 export const loadFeature = (pattern: string | string[]) => {
@@ -29,38 +30,35 @@ export const loadFeature = (pattern: string | string[]) => {
     const document = parser.parseDocument(source);
     const pickles = parser.compileDocument(document, featureFile);
 
-    if (document.feature) {
-      describe(document.feature.name, () => {
-        for (const pickle of pickles) {
-          test(pickle.name, async () => {
-            const instanceManager = new InstanceManager();
-
-            for (const step of pickle.steps) {
-              const { stepDefinition, args } = BindingRegistry.instance.getStep(step.text);
-
-              const instance = instanceManager.getOrSaveInstance(stepDefinition.binding);
-
-              const calls: Promise<unknown>[] = [stepDefinition.method.apply(instance, parseArguments(args))];
-
-              if (stepDefinition.options?.timeout) {
-                const timeoutPromise = new Promise(() => {
-                  setTimeout(() => {
-                    throw new Error(`Step timed out after ${stepDefinition.options!.timeout}ms`);
-                  }, stepDefinition.options!.timeout);
-                });
-                calls.push(timeoutPromise);
-              }
-
-              await Promise.race(calls);
-            }
-            instanceManager.clear();
-          });
-        }
-      });
-    } else {
+    if (!document.feature) {
       throw new Error(`No feature defined in ${featureFile}`);
     }
+
+    describe(document.feature.name, () => {
+      for (const { name, steps } of pickles) {
+        test(name, async () => {
+          const container = new Container();
+
+          for (const { text } of steps) {
+            const { step, args } = Steps.instance.get(text);
+
+            const instance = container.get(step.binding);
+
+            await Promise.race([
+              step.method.apply(instance, parseArguments(args)),
+              timeout(step.options.timeout ?? 5000),
+            ]);
+          }
+
+          container.clear();
+        });
+      }
+    });
   }
+};
+
+const timeout = (ms: number) => {
+  return new Promise((_, reject) => setTimeout(() => reject(new Error(`Step timed out after ${ms}ms`)), ms));
 };
 
 const parseArguments = <T>(args: readonly Argument[]): (T | null)[] => {

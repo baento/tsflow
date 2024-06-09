@@ -1,9 +1,8 @@
-import { BindingRegistry } from "../registry";
 import { Binding, Step } from "../decorators";
+import { Steps } from "../steps";
 
-describe("Binding registry", () => {
+describe("Steps", () => {
   @Binding()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   class TestBindings {
     @Step("I have a second pattern")
     @Step("I have a step")
@@ -22,7 +21,6 @@ describe("Binding registry", () => {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   class TestBindings2 {
     @Step("I have a new step")
     public stepA() {
@@ -30,29 +28,29 @@ describe("Binding registry", () => {
     }
   }
 
-  describe("getStep", () => {
+  describe("get", () => {
     it("should return the step definition for the given text", () => {
-      const { stepDefinition } = BindingRegistry.instance.getStep("I have a step");
+      const { step: stepDefinition } = Steps.instance.get("I have a step");
 
       expect(stepDefinition).toBeDefined();
     });
 
     it("should throw an error if no step definition is found for the given text", () => {
-      expect(() => BindingRegistry.instance.getStep("I have an unknown step")).toThrow();
+      expect(() => Steps.instance.get("I have an unknown step")).toThrow();
     });
 
     it("should throw an error if multiple step definitions are found for the given text", () => {
-      expect(() => BindingRegistry.instance.getStep("I have a duplicate step")).toThrow();
+      expect(() => Steps.instance.get("I have a duplicate step")).toThrow();
     });
 
     it("should have the same step function when there's multiple pattern", () => {
-      const { stepDefinition: definition1 } = BindingRegistry.instance.getStep("I have a step");
-      const { stepDefinition: definition2 } = BindingRegistry.instance.getStep("I have a second pattern");
+      const { step: definition1 } = Steps.instance.get("I have a step");
+      const { step: definition2 } = Steps.instance.get("I have a second pattern");
       expect(definition1.method).toBe(definition2.method);
     });
 
     it("should throw en error if the class is not decorated with @Binding", () => {
-      expect(() => BindingRegistry.instance.getStep("I have a new step")).toThrow();
+      expect(() => Steps.instance.get("I have a new step")).toThrow();
     });
   });
 });

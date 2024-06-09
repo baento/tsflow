@@ -9,13 +9,13 @@ exports[`Throw when timeout is exceeded 1`] = `
 
     Step timed out after 250ms
 
-      46 |                 const timeoutPromise = new Promise(() => {
-      47 |                   setTimeout(() => {
-    > 48 |                     throw new Error(\`Step timed out after \${stepDefinition.options!.timeout}ms\`);
-         |                           ^
-      49 |                   }, stepDefinition.options!.timeout);
-      50 |                 });
-      51 |                 calls.push(timeoutPromise);
+      59 |
+      60 | const timeout = (ms: number) => {
+    > 61 |   return new Promise((_, reject) => setTimeout(() => reject(new Error(\`Step timed out after \${ms}ms\`)), ms));
+         |                                                             ^
+      62 | };
+      63 |
+      64 | const parseArguments = <T>(args: readonly Argument[]): (T | null)[] => {
 
-      at Timeout._onTimeout (../../src/gherkin/feature.ts:48:27)"
+      at Timeout._onTimeout (../../src/gherkin/feature.ts:61:61)"
 `;
