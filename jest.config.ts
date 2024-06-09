@@ -1,7 +1,7 @@
 import type { Config } from "jest";
 
 export default {
-  testMatch: ["<rootDir>/src/**/*.test.[jt]s"],
+  testMatch: ["<rootDir>/src/**/*.test.[jt]s", "<rootDir>/e2e/__tests__/**/*.test.[jt]s"],
   transform: {
     "^.+\\.[jt]s$": "ts-jest",
   },
