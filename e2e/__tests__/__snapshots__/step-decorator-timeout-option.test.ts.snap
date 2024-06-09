@@ -9,13 +9,21 @@ exports[`Throw when timeout is exceeded 1`] = `
 
     Step timed out after 250ms
 
-      59 |
-      60 | const timeout = (ms: number) => {
-    > 61 |   return new Promise((_, reject) => setTimeout(() => reject(new Error(\`Step timed out after \${ms}ms\`)), ms));
-         |                                                             ^
-      62 | };
-      63 |
-      64 | const parseArguments = <T>(args: readonly Argument[]): (T | null)[] => {
+      65 |
+      66 |   const timeoutPromise = new Promise((_, reject) => {
+    > 67 |     timer = setTimeout(reject, ms, new Error(\`Step timed out after \${ms}ms\`));
+         |                                    ^
+      68 |   });
+      69 |
+      70 |   await Promise.race([promise, timeoutPromise]);
 
-      at Timeout._onTimeout (../../src/gherkin/feature.ts:61:61)"
+      at ../../src/gherkin/feature.ts:67:36
+      at ../../src/gherkin/feature.ts:66:26
+      at ../../src/gherkin/feature.ts:8:71
+      at Object.<anonymous>.__awaiter (../../src/gherkin/feature.ts:4:12)
+      at wrapTimeout (../../src/gherkin/feature.ts:63:66)
+      at ../../src/gherkin/feature.ts:50:25
+      at ../../src/gherkin/feature.ts:8:71
+      at Object.<anonymous>.__awaiter (../../src/gherkin/feature.ts:4:12)
+      at Object.<anonymous> (../../src/gherkin/feature.ts:39:31)"
 `;
