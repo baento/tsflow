@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Throw when timeout is exceeded 1`] = `
+"FAIL __tests__/index.test.ts
+  Timeout Options
+    ✕ Throw when timeout is reached
+
+  ● Timeout Options › Throw when timeout is reached
+
+    Step timed out after 250ms
+
+      46 |                 const timeoutPromise = new Promise(() => {
+      47 |                   setTimeout(() => {
+    > 48 |                     throw new Error(\`Step timed out after \${stepDefinition.options!.timeout}ms\`);
+         |                           ^
+      49 |                   }, stepDefinition.options!.timeout);
+      50 |                 });
+      51 |                 calls.push(timeoutPromise);
+
+      at Timeout._onTimeout (../../src/gherkin/feature.ts:48:27)"
+`;
