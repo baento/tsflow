@@ -20,7 +20,7 @@ export default function runJest(dir: string) {
     `);
   }
 
-  return result;
+  return normalizeStdoutAndStderrOnResult(result);
 }
 
 function spawnJest(dir: string): ExecaSyncReturnValue {
@@ -56,4 +56,20 @@ function spawnJest(dir: string): ExecaSyncReturnValue {
   };
 
   return execa.sync(process.execPath, spawnArgs, spawnOptions);
+}
+
+function normalizeStdoutAndStderrOnResult(result: ExecaSyncReturnValue) {
+  const stdout = normalizeIcons(result.stdout);
+  const stderr = normalizeIcons(result.stderr);
+
+  return { ...result, stderr, stdout };
+}
+
+export function normalizeIcons(str: string): string {
+  if (!str) {
+    return str;
+  }
+
+  // Make sure to keep in sync with `jest-util/src/specialChars`
+  return str.replaceAll(/\u00D7/gu, "\u2715").replaceAll(/\u221A/gu, "\u2713");
 }

@@ -3,7 +3,7 @@
 exports[`Throw when timeout is exceeded 1`] = `
 "FAIL __tests__/index.test.ts
   Timeout Options
-    × Throw when timeout is reached
+    ✕ Throw when timeout is reached
 
   ● Timeout Options › Throw when timeout is reached
 
