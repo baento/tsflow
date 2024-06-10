@@ -51,6 +51,8 @@ export const Step: StepDecorator =
 export const Given = Step;
 export const When = Step;
 export const Then = Step;
+export const And = Step;
+export const But = Step;
 
 export const Types: TypesDecorator = (transformers) => (target) => {
   Reflect.defineMetadata("transformers", transformers, target);
