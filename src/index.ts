@@ -1,3 +1,2 @@
-export * from "./decorators";
-export * from "./gherkin";
-export * from "./steps";
+export { Binding, Step, Given, When, Then, Types } from "./decorators";
+export { loadFeature } from "./gherkin";
