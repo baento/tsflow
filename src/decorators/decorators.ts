@@ -4,9 +4,9 @@ import cloneDeep from "lodash.clonedeep";
 
 import { Dependencies } from "../dependencies";
 import { Steps } from "../steps";
-import type { StepMetadata } from "../types";
+import type { StepMetadata, TransformerMetadata } from "../types";
 
-import type { BindingDecorator, StepDecorator } from "./decorators.types";
+import type { BindingDecorator, StepDecorator, TypesDecorator } from "./decorators.types";
 
 export const Binding: BindingDecorator =
   (dependencies = []) =>
@@ -15,6 +15,7 @@ export const Binding: BindingDecorator =
 
     for (const key of propertyKeys) {
       const steps = Reflect.getMetadata("steps", target.prototype[key]) as StepMetadata[];
+      const transformers = Reflect.getMetadata("transformers", target.prototype[key]) as TransformerMetadata;
 
       if (steps) {
         for (const step of steps) {
@@ -22,6 +23,7 @@ export const Binding: BindingDecorator =
             ...cloneDeep(step),
             binding: target,
             method: target.prototype[key],
+            transformers,
           });
         }
       }
@@ -49,3 +51,7 @@ export const Step: StepDecorator =
 export const Given = Step;
 export const When = Step;
 export const Then = Step;
+
+export const Types: TypesDecorator = (transformers) => (target) => {
+  Reflect.defineMetadata("transformers", transformers, target);
+};

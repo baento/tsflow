@@ -6,8 +6,14 @@ Feature: Calculator
     When I add the values
     Then The result is 012
 
-  Scenario: Subtract two numbers (with cucumber expressions)
-    Given X is 1
-    And Y is 2
+  Scenario: Add two numbers (with regular expressions and @Types)
+    Given C is 1
+    And D is 2
+    When I add the values
+    Then The result should be 3
+
+  Scenario: Add two numbers (with cucumber expressions)
+    Given E is 1
+    And F is 2
     When I add the values
     Then The result equals 3

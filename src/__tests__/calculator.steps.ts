@@ -1,4 +1,4 @@
-import { Binding, Given, Then, When } from "../decorators";
+import { Binding, Given, Then, Types, When } from "../decorators";
 
 class Calculator {
   private readonly calculator: number[] = [];
@@ -18,10 +18,16 @@ export default class CalculatorSteps {
 
   constructor(readonly calculator: Calculator) {}
 
-  @Given("X is {int}")
-  @Given("Y is {int}")
+  @Given("E is {int}")
+  @Given("F is {int}")
   @Given(/[AB] is (\d)/)
   public stepIs(value: number) {
+    this.calculator.add(value);
+  }
+
+  @Given(/[CD] is (\d)/)
+  @Types([Number])
+  public stepIs2(value: number) {
     this.calculator.add(value);
   }
 
@@ -33,6 +39,12 @@ export default class CalculatorSteps {
   @Then("The result equals {int}")
   @Then(/The result is (\w+)/)
   public stepResult(expectedResult: number) {
+    expect(this.result).toStrictEqual(expectedResult);
+  }
+
+  @Then(/The result should be (\d)/)
+  @Types([Number])
+  public stepResult2(expectedResult: number) {
     expect(this.result).toStrictEqual(expectedResult);
   }
 }

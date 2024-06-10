@@ -31,7 +31,11 @@ export class Steps {
 
       if (args) {
         if (foundStep) {
-          throw new Error(`Found multiple step definitions for "${text}"`);
+          throw new Error(dedent`
+            Found multiple step definitions for "${text}"
+            - ${foundStep.pattern}
+            - ${step.pattern}
+            `);
         }
 
         foundStep = step;
@@ -44,10 +48,26 @@ export class Steps {
         No step definition found for "${text}".
         Did you decorate your step definition with a Step decorator (@Given, @When, @Then, ...)?
         If you did, make sure you also decorate your class with the @Binding decorator.
-        `);
+      `);
     }
 
-    return { step: foundStep, args: foundArgs };
+    if (foundStep.transformers) {
+      if (foundArgs.length < foundStep.transformers.length) {
+        throw new Error(dedent`
+          Found too many types in with @Types for "${text}".
+            - Expected: ${foundArgs.length} types at most.
+        `);
+      }
+
+      for (let i = 0; i < foundArgs.length; i++) {
+        foundArgs[i].parameterType.transform = (_, value) => foundStep.transformers[i](value as any);
+      }
+    }
+
+    return {
+      step: foundStep,
+      args: foundArgs,
+    };
   }
 
   public set(stepDefinition: StepDefinition) {

@@ -23,4 +23,9 @@ export type StepMetadata = {
 export type StepDefinition = StepMetadata & {
   method: Method;
   binding: Class;
+  transformers?: TransformerMetadata;
 };
+
+export type Transformer<T> = (value: string) => T;
+
+export type TransformerMetadata = Transformer<any>[];

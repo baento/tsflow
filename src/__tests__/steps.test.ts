@@ -1,4 +1,4 @@
-import { Binding, Step } from "../decorators";
+import { Binding, Step, Types } from "../decorators";
 import { Steps } from "../steps";
 
 describe("Steps", () => {
@@ -17,6 +17,12 @@ describe("Steps", () => {
 
     @Step("I have a duplicate step")
     public stepC() {
+      return "step";
+    }
+
+    @Step("I have a step with more types than arguments")
+    @Types([Number])
+    public stepD() {
       return "step";
     }
   }
@@ -51,6 +57,10 @@ describe("Steps", () => {
 
     it("should throw en error if the class is not decorated with @Binding", () => {
       expect(() => Steps.instance.get("I have a new step")).toThrow();
+    });
+
+    it("should throw an error if the number of types is greater than the number of arguments", () => {
+      expect(() => Steps.instance.get("I have a step with more types than arguments")).toThrow();
     });
   });
 });
