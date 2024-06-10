@@ -1,3 +1,10 @@
+# [1.1.0-alpha.5](https://github.com/baento/tsflow/compare/v1.1.0-alpha.4...v1.1.0-alpha.5) (2024-06-10)
+
+
+### Features
+
+* **types:** add @Types decorator ([#31](https://github.com/baento/tsflow/issues/31)) ([8f54b86](https://github.com/baento/tsflow/commit/8f54b863ad332ccb65c55bd08aca48afaa377cc6))
+
 # [1.1.0-alpha.4](https://github.com/baento/tsflow/compare/v1.1.0-alpha.3...v1.1.0-alpha.4) (2024-06-09)
 
 
