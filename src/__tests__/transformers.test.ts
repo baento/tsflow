@@ -27,3 +27,13 @@ describe("Booleanish transformer", () => {
     expect(() => Transformers.Booleanish("yes", "no")("invalid")).toThrow();
   });
 });
+
+describe("JSON transformer", () => {
+  it("should transform a JSON string to an object", () => {
+    expect(Transformers.Json('{"key": "value"}')).toEqual({ key: "value" });
+  });
+
+  it("should throw when transforming an invalid JSON string", () => {
+    expect(() => Transformers.Json("invalid")).toThrow();
+  });
+});

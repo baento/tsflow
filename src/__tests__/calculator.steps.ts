@@ -1,4 +1,5 @@
 import { Binding, Given, Then, Types, When } from "../decorators";
+import type { DataTable } from "../gherkin";
 
 class Calculator {
   private readonly calculator: number[] = [];
@@ -29,6 +30,13 @@ export default class CalculatorSteps {
   @Types([Number])
   public stepIs2(value: number) {
     this.calculator.add(value);
+  }
+
+  @Given("The numbers:")
+  public stepIs3(data: DataTable) {
+    for (const row of data) {
+      this.calculator.add(Number(row.value));
+    }
   }
 
   @When("I add the values", { timeout: 5000 })
