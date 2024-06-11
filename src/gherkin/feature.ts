@@ -10,8 +10,13 @@ import { Steps } from "../steps";
 
 import { extractArgument } from "./argument";
 import { GherkinParser } from "./parser";
+import { getTagParser } from "./tags";
 
-export const loadFeature = (pattern: string | string[]) => {
+type Options = {
+  tags?: string;
+};
+
+export const loadFeature = (pattern: string | string[], options?: Options) => {
   const callSite = callsites()[1];
   const fileName = callSite.getFileName()!;
   const dirName = path.dirname(fileName);
@@ -22,6 +27,8 @@ export const loadFeature = (pattern: string | string[]) => {
     const patterns = Array.isArray(pattern) ? pattern.join(", ") : pattern;
     throw new Error(`No feature file found for ${patterns}`);
   }
+
+  const tagParser = getTagParser(options?.tags);
 
   for (const featureFile of featureFiles) {
     const source = fs.readFileSync(featureFile, { encoding: "utf-8" });
@@ -36,7 +43,15 @@ export const loadFeature = (pattern: string | string[]) => {
     }
 
     describe(document.feature.name, () => {
-      for (const { name, steps } of pickles) {
+      for (const { name, steps, tags } of pickles) {
+        if (tagParser) {
+          const tagNames = tags.map((tag) => tag.name);
+
+          if (!tagParser.evaluate(tagNames)) {
+            continue;
+          }
+        }
+
         test(name, async () => {
           const container = new Container();
 
