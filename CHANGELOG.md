@@ -1,3 +1,10 @@
+# [1.1.0-alpha.6](https://github.com/baento/tsflow/compare/v1.1.0-alpha.5...v1.1.0-alpha.6) (2024-06-11)
+
+
+### Features
+
+* **feature:** add support for datatables and docstrings ([#33](https://github.com/baento/tsflow/issues/33)) ([0c2c80a](https://github.com/baento/tsflow/commit/0c2c80aa8341a3d70a4c0c974921cb9491880593))
+
 # [1.1.0-alpha.5](https://github.com/baento/tsflow/compare/v1.1.0-alpha.4...v1.1.0-alpha.5) (2024-06-10)
 
 
