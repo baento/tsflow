@@ -24,12 +24,12 @@ export class Steps {
 
   public get(text: string) {
     let foundStep;
-    let foundArgs;
+    let foundParams;
 
     for (const [expression, step] of this._steps.entries()) {
-      const args = expression.match(text);
+      const params = expression.match(text);
 
-      if (args) {
+      if (params) {
         if (foundStep) {
           throw new Error(dedent`
             Found multiple step definitions for "${text}"
@@ -39,11 +39,11 @@ export class Steps {
         }
 
         foundStep = step;
-        foundArgs = args;
+        foundParams = params;
       }
     }
 
-    if (!foundStep || !foundArgs) {
+    if (!foundStep || !foundParams) {
       throw new Error(dedent`
         No step definition found for "${text}".
         Did you decorate your step definition with a Step decorator (@Given, @When, @Then, ...)?
@@ -52,21 +52,21 @@ export class Steps {
     }
 
     if (foundStep.transformers) {
-      if (foundArgs.length < foundStep.transformers.length) {
+      if (foundParams.length < foundStep.transformers.length) {
         throw new Error(dedent`
           Found too many types in with @Types for "${text}".
-            - Expected: ${foundArgs.length} types at most.
+            - Expected: ${foundParams.length} types at most.
         `);
       }
 
-      for (let i = 0; i < foundArgs.length; i++) {
-        foundArgs[i].parameterType.transform = (_, value) => foundStep.transformers[i](value as any);
+      for (let i = 0; i < foundParams.length; i++) {
+        foundParams[i].parameterType.transform = (_, value) => foundStep.transformers[i](value as any);
       }
     }
 
     return {
       step: foundStep,
-      args: foundArgs,
+      params: foundParams,
     };
   }
 

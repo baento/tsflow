@@ -1,6 +1,7 @@
-import { Bool, Booleanish } from "./booleanish";
+import boolean from "./boolean";
+import json from "./json";
 
 export const Transformers = {
-  Booleanish,
-  Boolean: Bool,
+  ...boolean,
+  ...json,
 };

@@ -8,6 +8,7 @@ import type { Argument } from "@cucumber/cucumber-expressions";
 import { Container } from "../dependencies";
 import { Steps } from "../steps";
 
+import { extractArgument } from "./argument";
 import { GherkinParser } from "./parser";
 
 export const loadFeature = (pattern: string | string[]) => {
@@ -39,12 +40,12 @@ export const loadFeature = (pattern: string | string[]) => {
         test(name, async () => {
           const container = new Container();
 
-          for (const { text } of steps) {
-            const { step, args } = Steps.instance.get(text);
+          for (const { text, argument } of steps) {
+            const { step, params } = Steps.instance.get(text);
 
             const instance = container.get(step.binding);
 
-            let promise = step.method.apply(instance, parseArguments(args));
+            let promise = step.method.apply(instance, [...transformParams(params), extractArgument(argument)]);
 
             if (step.options.timeout) {
               promise = wrapTimeout(promise, step.options.timeout);
@@ -72,8 +73,8 @@ const wrapTimeout = async <T>(promise: Promise<T>, ms: number) => {
   clearTimeout(timer);
 };
 
-const parseArguments = <T>(args: readonly Argument[]): (T | null)[] => {
-  return args.map((arg) => {
-    return arg.getValue(this);
+const transformParams = <T>(params: readonly Argument[]): (T | null)[] => {
+  return params.map((param) => {
+    return param.getValue(this);
   });
 };

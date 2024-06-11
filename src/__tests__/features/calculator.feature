@@ -17,3 +17,11 @@ Feature: Calculator
     And F is 2
     When I add the values
     Then The result equals 3
+
+  Scenario: Add two numbers (with data table)
+    Given The numbers:
+      | name | value |
+      | A    |     1 |
+      | B    |     2 |
+    When I add the values
+    Then The result equals 3
