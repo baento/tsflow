@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`loadFeature tag options 1`] = `
+"PASS __tests__/index.test.ts
+  loadFeature with tag option - Scenario
+    ✓ Add two number
+    ✓ Add two number
+    ✓ Add two number
+  loadFeature with tag option - Scenario Outline
+    ✓ Add two number (with Examples)
+    ✓ Add two number (with Examples)
+    ✓ Add two number (with Examples)
+    ✓ Add two number (with Examples)
+    ✓ Add two number (with Examples)
+    ✓ Add two number (with Examples)
+    ✓ Add two number (with Examples)
+    ✓ Add two number (with Examples)
+    ✓ Add two number (with Examples)
+    ✓ Add two number (with Examples)
+    ✓ Add two number (with Examples)
+    ✓ Add two number (with Examples)"
+`;

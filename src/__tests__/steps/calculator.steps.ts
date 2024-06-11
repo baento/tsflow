@@ -1,5 +1,5 @@
-import { Binding, Given, Then, Types, When } from "../decorators";
-import type { DataTable } from "../gherkin";
+import { Binding, Given, Then, Types, When } from "../../decorators";
+import type { DataTable } from "../../gherkin";
 
 class Calculator {
   private readonly calculator: number[] = [];
