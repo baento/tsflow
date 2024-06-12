@@ -1,16 +1,5 @@
 import { Binding, Given, Then, When } from "../../src";
-
-class Calculator {
-  private readonly calculator: number[] = [];
-
-  public add(value: number) {
-    this.calculator.push(value);
-  }
-
-  public sum() {
-    return this.calculator.reduce((prev, cur) => prev + cur, 0);
-  }
-}
+import { Calculator } from "../../src/__tests__/classes/calculator";
 
 @Binding([Calculator])
 export default class CalculatorSteps {
