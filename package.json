@@ -8,6 +8,7 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": ["dist"],
   "homepage": "https://github.com/baento/tsflow#readme",
   "repository": {
     "type": "git",
