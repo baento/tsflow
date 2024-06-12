@@ -1,17 +1,6 @@
-import { Binding, Given, Then, Types, When } from "../decorators";
-import type { DataTable } from "../gherkin";
-
-class Calculator {
-  private readonly calculator: number[] = [];
-
-  public add(value: number) {
-    this.calculator.push(value);
-  }
-
-  public sum() {
-    return this.calculator.reduce((prev, cur) => prev + cur, 0);
-  }
-}
+import { Binding, Given, Then, Types, When } from "../../decorators";
+import type { DataTable } from "../../gherkin";
+import { Calculator } from "../classes/calculator";
 
 @Binding([Calculator])
 export default class CalculatorSteps {
