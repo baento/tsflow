@@ -1,6 +1,7 @@
 name: TSFlow Release
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
