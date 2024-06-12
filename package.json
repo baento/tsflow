@@ -24,7 +24,8 @@
     "format": "biome format --write .",
     "format:check": "biome format .",
     "lint": "biome lint .",
-    "lint:fix": "biome lint --write ."
+    "lint:fix": "biome lint --write .",
+    "release": "semantic-release"
   },
   "dependencies": {
     "@cucumber/cucumber-expressions": "^17.1.0",
