@@ -1,3 +1,10 @@
+# [1.1.0-alpha.8](https://github.com/baento/tsflow/compare/v1.1.0-alpha.7...v1.1.0-alpha.8) (2024-06-12)
+
+
+### Features
+
+* **hooks:** add `@BeforeStep` and `@AfterStep` hooks ([#39](https://github.com/baento/tsflow/issues/39)) ([14a6fae](https://github.com/baento/tsflow/commit/14a6fae7669dd2c0c7ce32b012b697f1e8bd0681))
+
 # [1.1.0-alpha.7](https://github.com/baento/tsflow/compare/v1.1.0-alpha.6...v1.1.0-alpha.7) (2024-06-12)
 
 
