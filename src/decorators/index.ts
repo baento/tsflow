@@ -1,3 +1,3 @@
 export * from "./binding";
-export * from "./step";
+export * from "./steps";
 export * from "./hooks";

@@ -1,5 +1,5 @@
 import type { StepMetadata } from "../types";
-import type { StepDecorator, TypesDecorator } from "./decorators.types";
+import type { StepDecorator, TypesDecorator } from "./types";
 
 export const Step: StepDecorator =
   (pattern, options = {}) =>

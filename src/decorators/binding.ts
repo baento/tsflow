@@ -6,7 +6,7 @@ import { Dependencies } from "../dependencies";
 import { Steps } from "../steps";
 import type { HookDefinition, HookMetadata, StepMetadata, TransformerMetadata } from "../types";
 
-import type { BindingDecorator } from "./decorators.types";
+import type { BindingDecorator } from "./types";
 
 export const Binding: BindingDecorator =
   (dependencies = []) =>

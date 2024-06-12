@@ -1,5 +1,5 @@
 import { HookEnum, type HookMetadata } from "./../types";
-import type { HookDecorator } from "./decorators.types";
+import type { HookDecorator } from "./types";
 
 const HookFactory: (hookType: HookEnum) => HookDecorator =
   (hookType) =>
