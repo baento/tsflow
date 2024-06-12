@@ -1,3 +1,10 @@
+# [1.1.0-alpha.7](https://github.com/baento/tsflow/compare/v1.1.0-alpha.6...v1.1.0-alpha.7) (2024-06-12)
+
+
+### Features
+
+* **tag:** add tags support ([#34](https://github.com/baento/tsflow/issues/34)) ([b87f525](https://github.com/baento/tsflow/commit/b87f525167001a2547785cc151bcb09cb7d3abfc))
+
 # [1.1.0-alpha.6](https://github.com/baento/tsflow/compare/v1.1.0-alpha.5...v1.1.0-alpha.6) (2024-06-11)
 
 
