@@ -73,6 +73,6 @@ export class Steps {
   public set(stepDefinition: StepDefinition) {
     const stepExpression = this._expressionFactory.createExpression(stepDefinition.pattern);
 
-    this._steps.set(stepExpression, cloneDeep(stepDefinition));
+    this._steps.set(stepExpression, stepDefinition);
   }
 }

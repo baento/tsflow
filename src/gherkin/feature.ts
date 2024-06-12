@@ -6,6 +6,7 @@ import { globSync } from "fast-glob";
 import type { Argument } from "@cucumber/cucumber-expressions";
 
 import { Container } from "../dependencies";
+import { getHooks } from "../hooks";
 import { Steps } from "../steps";
 
 import { extractArgument } from "./argument";
@@ -43,7 +44,9 @@ export const loadFeature = (pattern: string | string[], options?: Options) => {
     }
 
     describe(document.feature.name, () => {
-      for (const { name, steps, tags } of pickles) {
+      for (const pickle of pickles) {
+        const { name, steps, tags } = pickle;
+
         if (tagParser) {
           const tagNames = tags.map((tag) => tag.name);
 
@@ -55,8 +58,22 @@ export const loadFeature = (pattern: string | string[], options?: Options) => {
         test(name, async () => {
           const container = new Container();
 
-          for (const { text, argument } of steps) {
+          for (const pickleStep of steps) {
+            const { text, argument } = pickleStep;
+
             const { step, params } = Steps.instance.get(text);
+
+            const { beforeHooks, afterHooks } = getHooks(step.hooks);
+
+            const hookParameters = {
+              pickle,
+              step: pickleStep,
+              gherkinDocument: document,
+            };
+
+            for (const hook of beforeHooks) {
+              await hook.method(hookParameters);
+            }
 
             const instance = container.get(step.binding);
 
@@ -67,6 +84,10 @@ export const loadFeature = (pattern: string | string[], options?: Options) => {
             }
 
             await promise;
+
+            for (const hook of afterHooks) {
+              await hook.method(hookParameters);
+            }
           }
 
           container.clear();
