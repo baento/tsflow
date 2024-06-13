@@ -1,13 +1,15 @@
 # TSFlow
 
-Welcome to **TSFlow**, a lightweight and intuitive framework for defining and running tests in your projects, using a syntax similar to [SpecFlow](https://specflow.org/). TSFlow makes it easy to write, organize, and execute steps in a structured and readable way.
+Welcome to **TSFlow**, a lightweight and intuitive framework for defining and running tests in your projects, inspired by [SpecFlow](https://specflow.org/) and [jest-cucumber](https://github.com/bencompton/jest-cucumber). TSFlow makes it easy to write, organize, and execute steps in a structured and readable way.
+
+> [!NOTE]  
+> This project is still under heavy development. Beware of breaking changes !
 
 ## Features
 
-- **Simple Syntax:** Declare and reuse steps with a clear and concise syntax.
-- **Automatic bindings:** Bind your [Gherkin](https://cucumber.io/docs/gherkin/reference/) scenarios to your step definitions with one line.
-- **Dependency injection:** Easily share context between your binding classes.
-- **Integration Friendly:** Works well with various testing and automation frameworks.
+- ✏️ **Simple syntax:** Implement and reuse steps with a clear and concise syntax.
+- 🔗 **Automatic bindings:** Bind your [Gherkin](https://cucumber.io/docs/gherkin/reference/) scenarios to your step definitions with two lines.
+- 💉 **Dependency injection:** Easily share context between your binding classes.
 
 ## Getting Started
 
@@ -19,7 +21,10 @@ To install TSFlow, run:
 npm install --save-dev @baento/tsflow
 ```
 
-### Usage
+> [!IMPORTANT]  
+> TSFlow is **not** a test runner. It currently only runs on [Jest](https://jestjs.io/), other test runners will be supported in the future (see #44).
+
+### Basic Usage
 
 Let's assume the following feature file :
 
@@ -47,14 +52,19 @@ loadFeature("./calculator.feature");
 
 ### Defining Steps
 
-Steps are defined using the `@Step`, `@Given`, `@When` and/or `@Then` decorators on class methods. They all have the same effect and only exist for readability.
+Steps are defined using the `@Step`, `@Given`, `@When` and/or `@Then` decorators on class methods decorated with the `@Binding` decorator. They all have the same effect and only exist for readability.
 
-TSFlow allows you to pass parameters to your step definitions. Define steps with a [Cucumber expression](https://github.com/cucumber/cucumber-expressions#readme) (with placeholders) or alternatively a [Regular Expression](https://en.wikipedia.org/wiki/Regular_expression) (with capture groups) and parameters will be automatically extracted and passed to your step functions.
+You can pass parameters to your step definitions by defining steps with a [Cucumber expression](https://github.com/cucumber/cucumber-expressions#readme) (with placeholders) or alternatively a [Regular Expression](https://en.wikipedia.org/wiki/Regular_expression) (with capture groups), parameters will be automatically extracted and passed to your step functions.
+
+> [!WARNING]  
+> Using Regular Expressions, parameters will not be automatically casted to the correct type.
+> You might want to add a `@Types` decorator onto the method to specify transformers for your parameters.
 
 ```typescript
 // calculator.steps.ts
-import { Given, When, Then } from "@baento/tsflow";
+import { Binding, Given, When, Then } from "@baento/tsflow";
 
+@Binding()
 class CalculatorSteps {
   private numbers: number[] = [];
   private result: number = 0;
@@ -72,18 +82,18 @@ class CalculatorSteps {
   }
 
   @Then(/^The result is (\d+)$/)
-  public stepResult(expectedResult: number) {
-    expect(this.result).toStrictEqual(expectedResult);
+  public stepResult(expectedResult: string) {
+    expect(this.result).toStrictEqual(Number(expectedResult));
   }
 }
 ```
 
 ### Dependency injection
 
-Classes with matching step definitions will be instanciated for each scenario defined in your feature file. Therefore, in order to share data between binding classes in the same scenario, you can use the `@Binding` decorator with an array of classes to be injected in the constructor :
+Classes with matching step definitions will be instanciated for each scenario defined in your feature file. Therefore, in order to share data between binding classes in the same scenario, you can specify dependencies in the `@Binding` decorator :
 
 ```typescript
-import { Binding } from "@baento/tsflow";
+import { Binding, Given } from "@baento/tsflow";
 
 class Calculator {
   public numbers: number[] = [];
@@ -103,8 +113,8 @@ class CalculatorSteps {
   // ...
 }
 ```
-
-Injected classes will be instanciated and will persist for an entire scenario.
+> [!NOTE]  
+> Injected classes will be instanciated and will persist for an entire scenario.
 
 ## Contributing
 
