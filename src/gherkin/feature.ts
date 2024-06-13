@@ -4,6 +4,7 @@ import callsites from "callsites";
 import { globSync } from "fast-glob";
 
 import type { Argument } from "@cucumber/cucumber-expressions";
+import type { GherkinDocument, Pickle, PickleStep } from "@cucumber/messages";
 
 import { Container } from "../dependencies";
 import { getHooks } from "../hooks";
@@ -44,8 +45,8 @@ export const loadFeature = (pattern: string | string[], options?: Options) => {
     }
 
     describe(document.feature.name, () => {
-      for (const pickle of pickles) {
-        const { name, steps, tags } = pickle;
+      for (let i = 0; i < pickles.length; i++) {
+        const { name, steps, tags } = pickles[i];
 
         if (tagParser) {
           const tagNames = tags.map((tag) => tag.name);
@@ -55,46 +56,58 @@ export const loadFeature = (pattern: string | string[], options?: Options) => {
           }
         }
 
-        test(name, async () => {
-          const container = new Container();
+        const rule = document.feature!.children[i]?.rule;
 
-          for (const pickleStep of steps) {
-            const { text, argument } = pickleStep;
-
-            const { step, params } = Steps.instance.get(text);
-
-            const { beforeHooks, afterHooks } = getHooks(step.hooks);
-
-            const hookParameters = {
-              pickle,
-              step: pickleStep,
-              gherkinDocument: document,
-            };
-
-            for (const hook of beforeHooks) {
-              await hook.method(hookParameters);
-            }
-
-            const instance = container.get(step.binding);
-
-            let promise = step.method.apply(instance, [...transformParams(params), extractArgument(argument)]);
-
-            if (step.options.timeout) {
-              promise = wrapTimeout(promise, step.options.timeout);
-            }
-
-            await promise;
-
-            for (const hook of afterHooks) {
-              await hook.method(hookParameters);
-            }
-          }
-
-          container.clear();
-        });
+        if (rule) {
+          describe(rule.name, () => {
+            defineTest(name, steps, pickles[i], document);
+          });
+        } else {
+          defineTest(name, steps, pickles[i], document);
+        }
       }
     });
   }
+};
+
+const defineTest = (name: string, steps: readonly PickleStep[], pickle: Pickle, document: GherkinDocument) => {
+  test(name, async () => {
+    const container = new Container();
+
+    for (const pickleStep of steps) {
+      const { text, argument } = pickleStep;
+
+      const { step, params } = Steps.instance.get(text);
+
+      const { beforeHooks, afterHooks } = getHooks(step.hooks);
+
+      const hookParameters = {
+        pickle,
+        step: pickleStep,
+        gherkinDocument: document,
+      };
+
+      for (const hook of beforeHooks) {
+        await hook.method(hookParameters);
+      }
+
+      const instance = container.get(step.binding);
+
+      let promise = step.method.apply(instance, [...transformParams(params), extractArgument(argument)]);
+
+      if (step.options.timeout) {
+        promise = wrapTimeout(promise, step.options.timeout);
+      }
+
+      await promise;
+
+      for (const hook of afterHooks) {
+        await hook.method(hookParameters);
+      }
+    }
+
+    container.clear();
+  });
 };
 
 const wrapTimeout = async <T>(promise: Promise<T>, ms: number) => {
