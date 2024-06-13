@@ -1,3 +1,10 @@
+# [1.1.0-alpha.9](https://github.com/baento/tsflow/compare/v1.1.0-alpha.8...v1.1.0-alpha.9) (2024-06-13)
+
+
+### Features
+
+* **rule:** add `Rule` gherkin keyword ([#42](https://github.com/baento/tsflow/issues/42)) ([eb8b9fc](https://github.com/baento/tsflow/commit/eb8b9fc44e742360ed62f450184ffdcebe75ee5e))
+
 # [1.1.0-alpha.8](https://github.com/baento/tsflow/compare/v1.1.0-alpha.7...v1.1.0-alpha.8) (2024-06-12)
 
 
