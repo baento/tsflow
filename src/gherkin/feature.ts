@@ -60,17 +60,17 @@ export const loadFeature = (pattern: string | string[], options?: Options) => {
 
         if (rule) {
           describe(rule.name, () => {
-            runTest(name, steps, pickles[i], document);
+            defineTest(name, steps, pickles[i], document);
           });
         } else {
-          runTest(name, steps, pickles[i], document);
+          defineTest(name, steps, pickles[i], document);
         }
       }
     });
   }
 };
 
-const runTest = (name: string, steps: readonly PickleStep[], pickle: Pickle, document: GherkinDocument) => {
+const defineTest = (name: string, steps: readonly PickleStep[], pickle: Pickle, document: GherkinDocument) => {
   test(name, async () => {
     const container = new Container();
 
