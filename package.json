@@ -2,12 +2,13 @@
   "name": "@baento/tsflow",
   "version": "1.1.0-alpha.9",
   "author": "Antoine Balieu",
-  "private": true,
   "license": "MIT",
   "type": "module",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "exports": {
+    "import": "./dist/index.js",
+    "types": "./dist/index.d.ts"
+  },
+  "files": ["dist"],
   "homepage": "https://github.com/baento/tsflow#readme",
   "repository": {
     "type": "git",
