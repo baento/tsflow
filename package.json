@@ -41,7 +41,8 @@
       "last 5 safari version"
     ]
   },
-  "engines": {
-    "node": ">=18.0"
+  "volta": {
+    "node": "22.2.0",
+    "npm": "10.7.0"
   }
 }
