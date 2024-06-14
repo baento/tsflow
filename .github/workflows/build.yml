@@ -1,4 +1,4 @@
-name: TSFlow CI
+name: Build and check code quality
 
 on:
   pull_request:
@@ -14,8 +14,8 @@ env:
   HUSKY: 0
 
 jobs:
-  setup:
-    name: Setup Node.js and install dependencies
+  install:
+    name: Install package
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,18 +24,20 @@ jobs:
         uses: "./.github/actions/setup"
 
   commitlint:
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     name: Lint commit messages
     needs:
-      - setup
+      - install
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          
       - name: Setup Node.js and install dependencies
         uses: "./.github/actions/setup"
+
       - name: Validate current commit (last commit) with commitlint
         if: github.event_name == 'push'
         run: npx commitlint --last --verbose
@@ -43,16 +45,17 @@ jobs:
         if: github.event_name == 'pull_request'
         run: npx commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
-  lint:
+  lint-format:
     name: Lint and format
     needs:
-      - setup
+      - install
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Node.js and install dependencies
         uses: "./.github/actions/setup"
+
       - name: Run lint
         run: npm run lint
       - name: Run format
@@ -61,25 +64,27 @@ jobs:
   test:
     name: Test
     needs:
-      - setup
+      - install
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Node.js and install dependencies
         uses: "./.github/actions/setup"
+
       - name: Run tests
         run: npm run test:ci
 
   build:
     name: Build
     needs:
-      - setup
+      - install
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Node.js and install dependencies
         uses: "./.github/actions/setup"
+
       - name: Run build
         run: npm run build
