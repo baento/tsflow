@@ -1,3 +1,10 @@
+# [1.1.0-alpha.10](https://github.com/baento/tsflow/compare/v1.1.0-alpha.9...v1.1.0-alpha.10) (2024-06-14)
+
+
+### Bug Fixes
+
+* **exports:** added default exports in package.json ([#47](https://github.com/baento/tsflow/issues/47)) ([30882cb](https://github.com/baento/tsflow/commit/30882cb8899141cc79c6ffd461f6a4a55c3f2333))
+
 # [1.1.0-alpha.9](https://github.com/baento/tsflow/compare/v1.1.0-alpha.8...v1.1.0-alpha.9) (2024-06-13)
 
 
