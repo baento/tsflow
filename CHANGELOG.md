@@ -1,3 +1,10 @@
+# [1.1.0-alpha.11](https://github.com/baento/tsflow/compare/v1.1.0-alpha.10...v1.1.0-alpha.11) (2024-06-14)
+
+
+### Features
+
+* **biome:** format ignores package.json and package-lock.json ([7368a4e](https://github.com/baento/tsflow/commit/7368a4ee31fd1590edfebabdab28f2d9fae2482c))
+
 # [1.1.0-alpha.10](https://github.com/baento/tsflow/compare/v1.1.0-alpha.9...v1.1.0-alpha.10) (2024-06-14)
 
 
