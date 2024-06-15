@@ -1,4 +1,4 @@
-name: Test docs build
+name: Build and check code quality
 
 on:
   pull_request:
@@ -6,8 +6,8 @@ on:
       - docs
 
 jobs:
-  test-build:
-    name: Test deployment
+  build:
+    name: Build Docusaurus
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,10 +15,11 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: npm
+          node-version-file: "package.json"
+          cache: "npm"
+          cache-dependency-path: "package-lock.json"
 
       - name: Install dependencies
         run: npm ci
-      - name: Test build website
+      - name: Build website
         run: npm run build
