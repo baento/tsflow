@@ -49,6 +49,12 @@ const config: Config = {
   ],
 
   themeConfig: {
+    announcementBar: {
+      content: "TSFlow is still in early development. Beware of bugs and breaking changes!",
+      backgroundColor: "#cc3300",
+      textColor: "#fff",
+      isCloseable: false,
+    },
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
