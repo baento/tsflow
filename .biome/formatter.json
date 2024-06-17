@@ -1,0 +1,15 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.8.0/schema.json",
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 120,
+    "ignore": ["node_modules", "dist", "coverage", "CHANGELOG.md", "package.json", "package-lock.json"]
+  },
+  "organizeImports": {
+    "enabled": true
+  }
+}
