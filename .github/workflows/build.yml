@@ -66,11 +66,28 @@ jobs:
     needs:
       - install
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 19.x, 20.x, 21.x, 22.x]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Node.js and install dependencies
-        uses: "./.github/actions/setup"
+
+      - name: Setup Node.js v${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm ci
+        shell: bash
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node_modules-${{hashFiles('package-lock.json')}}
+          restore-keys: node_modules-
 
       - name: Run tests
         run: npm run test:ci
