@@ -70,7 +70,7 @@ const config: Config = {
     navbar: {
       title: "TSFlow",
       logo: {
-        alt: "My Site Logo",
+        alt: "TSFlow Logo",
         src: "img/logo.svg",
       },
       items: [
