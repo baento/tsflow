@@ -1,3 +1,9 @@
+## [1.1.0-alpha.12](https://github.com/baento/tsflow/compare/v1.1.0-alpha.11...v1.1.0-alpha.12) (2024-07-02)
+
+### Bug Fixes
+
+* **entrypoint:** added main, module and types to package.json ([#56](https://github.com/baento/tsflow/issues/56)) ([2d0d5be](https://github.com/baento/tsflow/commit/2d0d5be8499be71f2fbcb0173cbb00a1930eafe0))
+
 # [1.1.0-alpha.11](https://github.com/baento/tsflow/compare/v1.1.0-alpha.10...v1.1.0-alpha.11) (2024-06-14)
 
 
